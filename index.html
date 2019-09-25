@@ -5,10 +5,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>bjs</title>
+        <link rel="stylesheet" href="./node_modules/normalize.css/normalize.css">
+        <style>
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+
+            .container {
+                margin: 0 3%;
+            }
+        </style>
     </head>
     <body>
-        <p>It's works</p>
-        <div class="app"></div>
+        <div class="container">
+            <p>bjs</p>
+            <p>ここにターン</p>
+            <div class="application" style="width: 500px; height: 500px; border: 1px solid #ccc;">
+                ここに盤面
+            </div>
+            <div class="result">ここに結果</div>
+            <div class="app"></div>
+        </div>
         <script src="./dist/index.js"></script>
     </body>
 </html>
