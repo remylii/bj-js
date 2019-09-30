@@ -68,8 +68,10 @@ describe(`isGameEnd`, (): void => {
         board.put(1, 0, s);
         board.put(0, 0, s);
 
-        const response = board.isGameEnd(0);
-        expect(response).toBe(true);
+        const response1 = board.isGameEnd(0);
+        const response2 = board.isGameEnd(4);
+        expect(response1).toBe(true);
+        expect(response2).toBe(true);
     });
 
     test(`line not enough`, (): void => {
@@ -83,7 +85,9 @@ describe(`isGameEnd`, (): void => {
         board.put(1, 0, s);
         board.put(0, 0, s);
 
-        const response = board.isGameEnd(0);
-        expect(response).toBe(false);
+        const response1 = board.isGameEnd(0);
+        const response2 = board.isGameEnd(4);
+        expect(response1).toBe(false);
+        expect(response2).toBe(false);
     });
 });

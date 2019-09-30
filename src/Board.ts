@@ -50,6 +50,14 @@ export class Board {
             return true;
         }
 
+        if (idx >= (win_count - 1)) {
+            const yoko_minus = this.data.slice((idx - win_count + 1), idx);
+            const yoko_minus_result = yoko_minus.every(elem => elem === s);
+            if (yoko_minus_result === true) {
+                return true;
+            }
+        }
+
         return false;
     }
 }
