@@ -1,8 +1,10 @@
 import { arrayExpression } from "@babel/types";
 
+type BoardData = Array<string|null>;
+
 export class Board {
     private length: number;
-    private data: Array<string|null>;
+    private data: BoardData;
 
     constructor(n: number) {
         if (n < 0) {
@@ -49,7 +51,7 @@ export class Board {
         if (yoko_result === true) {
             return true;
         }
-
+        // yoko m
         if (idx >= (win_count - 1)) {
             const yoko_minus = this.data.slice((idx - win_count + 1), idx);
             const yoko_minus_result = yoko_minus.every(elem => elem === s);
@@ -58,6 +60,27 @@ export class Board {
             }
         }
 
+        // tate
+        const tate_temp = new Array;
+        for (let i = 0; i < win_count; i++) {
+            tate_temp.push( idx + (i * this.length) );
+        }
+        const tate = tate_temp.map(v => this.data[v]);
+        const tate_result = tate.every(elem => elem === s);
+        if (tate_result === true) {
+            return true;
+        }
+
+        // tate m
+        const tate_m_temp = new Array;
+        for (let i = 0; i < win_count; i++) {
+            tate_m_temp.push( idx - (i * this.length) );
+        }
+        const tate_minus = tate_m_temp.map(v => this.data[v]);
+        const tate_m_result = tate_minus.every(elem => elem === s);
+        if (tate_m_result === true) {
+            return true;
+        }
         return false;
     }
 }

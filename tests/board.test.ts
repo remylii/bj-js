@@ -90,4 +90,21 @@ describe(`isGameEnd`, (): void => {
         expect(response1).toBe(false);
         expect(response2).toBe(false);
     });
+
+    test(`tate win`, (): void => {
+        const board = new Board(10);
+        const s = `●`;
+
+        board.put(0, 4, s);
+        board.put(0, 3, s);
+        board.put(0, 2, s);
+        board.put(0, 1, s);
+        board.put(0, 0, s);
+
+        const response1 = board.isGameEnd(0);
+        expect(response1).toBe(true);
+
+        const response2 = board.isGameEnd(40);
+        expect(response2).toBe(true);
+    });
 });
