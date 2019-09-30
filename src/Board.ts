@@ -34,4 +34,22 @@ export class Board {
 
         this.data[idx] = block;
     }
+
+    isGameEnd(idx: number): boolean {
+        if (this.data[idx] === undefined || this.data[idx] === null) {
+            return false;
+        }
+
+        const win_count: number = 5;
+        const s = this.data[idx];
+
+        // yoko
+        const yoko = this.data.slice(idx, idx + win_count);
+        const yoko_result = yoko.every(elem => elem === s);
+        if (yoko_result === true) {
+            return true;
+        }
+
+        return false;
+    }
 }

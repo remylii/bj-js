@@ -55,3 +55,35 @@ describe('Board', (): void => {
         }).toThrow();
     });
 });
+
+
+describe(`isGameEnd`, (): void => {
+    test(`line win`, (): void => {
+        const board = new Board(10);
+        const s = `●`;
+
+        board.put(4, 0, s);
+        board.put(3, 0, s);
+        board.put(2, 0, s);
+        board.put(1, 0, s);
+        board.put(0, 0, s);
+
+        const response = board.isGameEnd(0);
+        expect(response).toBe(true);
+    });
+
+    test(`line not enough`, (): void => {
+        const board = new Board(10);
+        const s = `●`;
+        const s2 = `○`;
+
+        board.put(4, 0, s2);
+        board.put(3, 0, s);
+        board.put(2, 0, s);
+        board.put(1, 0, s);
+        board.put(0, 0, s);
+
+        const response = board.isGameEnd(0);
+        expect(response).toBe(false);
+    });
+});
