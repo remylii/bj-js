@@ -61,26 +61,29 @@ export class Board {
         }
 
         // tate
-        const tate_temp = new Array;
+        const tate: BoardData = new Array;
         for (let i = 0; i < win_count; i++) {
-            tate_temp.push( idx + (i * this.length) );
+            let temp_idx = idx + (i * this.length);
+            tate.push( this.data[temp_idx] );
         }
-        const tate = tate_temp.map(v => this.data[v]);
         const tate_result = tate.every(elem => elem === s);
         if (tate_result === true) {
             return true;
         }
 
         // tate m
-        const tate_m_temp = new Array;
+        const tate_minus: BoardData = new Array;
         for (let i = 0; i < win_count; i++) {
-            tate_m_temp.push( idx - (i * this.length) );
+            let temp_idx = idx - (i * this.length);
+            tate_minus.push( this.data[temp_idx] );
         }
-        const tate_minus = tate_m_temp.map(v => this.data[v]);
         const tate_m_result = tate_minus.every(elem => elem === s);
         if (tate_m_result === true) {
             return true;
         }
         return false;
+
+        // diagonally up left
+
     }
 }
