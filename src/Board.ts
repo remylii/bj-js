@@ -62,7 +62,7 @@ export class Board {
 
         // tate
         const tate: BoardData = new Array;
-        for (let i = 0; i < win_count; i++) {
+        for (let i = 1; i < win_count; i++) {
             let temp_idx = idx + (i * this.length);
             tate.push( this.data[temp_idx] );
         }
@@ -73,7 +73,7 @@ export class Board {
 
         // tate m
         const tate_minus: BoardData = new Array;
-        for (let i = 0; i < win_count; i++) {
+        for (let i = 1; i < win_count; i++) {
             let temp_idx = idx - (i * this.length);
             tate_minus.push( this.data[temp_idx] );
         }
@@ -81,9 +81,51 @@ export class Board {
         if (tate_m_result === true) {
             return true;
         }
-        return false;
 
         // diagonally up left
+        const diagonally_up_left: BoardData = new Array;
+        for (let i = 1; i < win_count; i++) {
+            let temp_idx = idx - (this.length * i) - i;
+            diagonally_up_left.push( this.data[temp_idx] );
+        }
+        const diagonally_up_left_result = diagonally_up_left.every(elem => elem === s);
+        if (diagonally_up_left_result === true) {
+            return true;
+        }
 
+        // diagonal down right
+        const diagonal_down_right: BoardData = new Array;
+        for (let i = 1; i < win_count; i++) {
+            let temp_idx = idx + (this.length * i) + i;
+            diagonal_down_right.push( this.data[temp_idx] );
+        }
+        const diagonal_d_r_result = diagonal_down_right.every(elem => elem === s);
+        if (diagonal_d_r_result === true) {
+            return true;
+        }
+
+        // diagonal up right
+        const diagonal_up_right: BoardData = new Array;
+        for (let i = 1; i < win_count; i++) {
+            let temp_idx = idx - (this.length * i) + i;
+            diagonal_up_right.push( this.data[temp_idx] );
+        }
+        const diagonally_up_right_result = diagonal_up_right.every(elem => elem === s);
+        if (diagonally_up_right_result === true) {
+            return true;
+        }
+
+        //diagonal down left
+        const diagonal_down_left: BoardData = new Array;
+        for (let i = 1; i < win_count; i++) {
+            let temp_idx = idx + (this.length * i) - i;
+            diagonal_down_left.push( this.data[temp_idx] );
+        }
+        const diagonal_d_l_result = diagonal_down_left.every(elem => elem === s);
+        if (diagonal_d_l_result === true) {
+            return true;
+        }
+
+        return false;
     }
 }

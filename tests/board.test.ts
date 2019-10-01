@@ -107,4 +107,38 @@ describe(`isGameEnd`, (): void => {
         const response2 = board.isGameEnd(40);
         expect(response2).toBe(true);
     });
+
+    test(`diagonal left to right win`, (): void => {
+        const board = new Board(10);
+        const s = '○';
+
+        board.put(0, 0, s);
+        board.put(1, 1, s);
+        board.put(2, 2, s);
+        board.put(3, 3, s);
+        board.put(4, 4, s);
+
+        const response1 = board.isGameEnd(44);
+        expect(response1).toBe(true);
+
+        const response2 = board.isGameEnd(0);
+        expect(response2).toBe(true);
+    });
+
+    test(`diagonal right to left win`, (): void => {
+        const board = new Board(10);
+        const s = '○';
+
+        board.put(0, 4, s);
+        board.put(1, 3, s);
+        board.put(2, 2, s);
+        board.put(3, 1, s);
+        board.put(4, 0, s);
+
+        const response1 = board.isGameEnd(40);
+        expect(response1).toBe(true);
+
+        const response2 = board.isGameEnd(4);
+        expect(response2).toBe(true);
+    });
 });
