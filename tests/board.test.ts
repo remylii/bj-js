@@ -129,10 +129,17 @@ describe(`isGameEnd`, (): void => {
         const board = new Board(10);
         const s = '○';
 
+        const a = board.isGameEnd(40);
+        expect(a).toBe(false);
+
         board.put(0, 4, s);
         board.put(1, 3, s);
         board.put(2, 2, s);
         board.put(3, 1, s);
+
+        const b = board.isGameEnd(4);
+        expect(b).toBe(false);
+
         board.put(4, 0, s);
 
         const response1 = board.isGameEnd(40);
