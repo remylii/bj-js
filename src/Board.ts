@@ -1,3 +1,5 @@
+import { config } from '#/config/app';
+
 type BoardData = Array<string|null>;
 
 export class Board {
@@ -36,7 +38,7 @@ export class Board {
     }
 
     isGameEnd(idx: number): boolean {
-        const indexes = [
+        const indexes: Array<number> = [
             -(this.length + 1),
             -(this.length),
             -(this.length - 1),
@@ -47,12 +49,11 @@ export class Board {
             (this.length + 1)
         ];
 
-        const win_count = 5;
         const s = this.data[idx];
         if (s === null || s === undefined) return false;
 
         iterableIndexes: for (const val of indexes) {
-            for (let i = 1; i < win_count; i++) {
+            for (let i = 1; i < config.WIN_COUNT; i++) {
                 let target_idx = idx + (val * i);
                 if (target_idx < 0 || s !== this.data[target_idx]) {
                     continue iterableIndexes;
