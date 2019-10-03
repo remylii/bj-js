@@ -30,11 +30,25 @@ export class Board {
         }
 
         const idx = x + (y * this.length);
-        if (this.data[x] !== null) {
+
+        this.setData(idx, block);
+        return;
+    }
+
+    setData(n: number, block: string): void {
+        if (this.exists(n) === true) {
             throw Error(`Already declared`);
         }
 
-        this.data[idx] = block;
+        this.data[n] = block;
+    }
+
+    exists(n: number): boolean {
+        if (this.data[n] !== null) {
+            return true;
+        }
+
+        return false;
     }
 
     isGameEnd(idx: number): boolean {

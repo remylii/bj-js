@@ -54,6 +54,23 @@ describe('Board', (): void => {
             board.put(0, 0, s2);
         }).toThrow();
     });
+
+    test(`exists`, (): void => {
+        const board = new Board(10);
+        const s = `x`;
+
+        for (let i = 0; i < 100; i++) {
+            let res = board.exists(i);
+            expect(res).toBe(false);
+
+            board.setData(i, s);
+        }
+
+        for (let i = 0; i < 100; i++) {
+            let res2 = board.exists(i);
+            expect(res2).toBe(true);
+        }
+    });
 });
 
 
