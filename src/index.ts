@@ -1,14 +1,16 @@
 import { Board } from '#/Board';
 
-const board = new Board(10);
-const elements = document.querySelectorAll('.item');
 
+const board = new Board(10);
+const items: NodeListOf<Element> = document.querySelectorAll('.item');
+const allItems: Array<HTMLElement> = [].slice.call(items);
+const element: HTMLElement | null = document.querySelector('.container');
 const resultElement: HTMLElement | null = document.querySelector('.result');
 
-elements.forEach((elem: Element) => {
-    elem.addEventListener('click', (): void => {
-        const alls: Array<Element> = [].slice.call(elements);
-        const idx: number = alls.indexOf(elem);
+if (!!element) {
+    element.addEventListener('click', (e: Event): void => {
+        const elem = e.target as HTMLElement;
+        const idx: number = allItems.indexOf(elem);
 
         if (board.exists(idx)) {
             return;
@@ -25,5 +27,7 @@ elements.forEach((elem: Element) => {
             }
             return;
         }
-    });
-});
+    }, false);
+}
+
+
