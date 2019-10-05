@@ -1,6 +1,6 @@
-import { config } from '#/config/app';
+import { config } from "#/config/app";
 
-type BoardData = Array<string|null>;
+type BoardData = Array<string | null>;
 
 export class Board {
     private length: number;
@@ -12,11 +12,11 @@ export class Board {
         }
         this.length = n;
 
-        const total_cell_count = n**2;
-        this.data = new Array<string|null>(total_cell_count).fill(null);
+        const total_cell_count = n ** 2;
+        this.data = new Array<string | null>(total_cell_count).fill(null);
     }
 
-    getViewData(): Array<string|null> {
+    getViewData(): Array<string | null> {
         return this.data;
     }
 
@@ -29,7 +29,7 @@ export class Board {
             throw Error(`Invalid argument y`);
         }
 
-        const idx = x + (y * this.length);
+        const idx = x + y * this.length;
 
         this.setData(idx, block);
         return;
@@ -54,13 +54,13 @@ export class Board {
     isGameEnd(idx: number): boolean {
         const indexes: Array<number> = [
             -(this.length + 1),
-            -(this.length),
+            -this.length,
             -(this.length - 1),
             -1,
             1,
-            (this.length - 1),
+            this.length - 1,
             this.length,
-            (this.length + 1)
+            this.length + 1
         ];
 
         const s = this.data[idx];
@@ -68,13 +68,48 @@ export class Board {
 
         iterableIndexes: for (const val of indexes) {
             for (let i = 1; i < config.WIN_COUNT; i++) {
-                let target_idx = idx + (val * i);
+                let target_idx = idx + val * i;
                 if (target_idx < 0 || s !== this.data[target_idx]) {
                     continue iterableIndexes;
                 }
             }
 
             return true;
+        }
+
+        return false;
+    }
+
+    isWin(idx: number): boolean {
+        const indexes: Array<number> = [
+            this.length + 1,
+            this.length,
+            this.length - 1,
+            1
+        ];
+
+        for (const val of indexes) {
+            const s = this.data[idx];
+
+            let round = 0;
+            let same_count = 1;
+            while (round < 2) {
+                let base = round === 0 ? val : -val;
+                oneSide: for (let i = 1; i < config.WIN_COUNT; i++) {
+                    let target_idx = idx + base * i;
+
+                    if (target_idx < 0 || s !== this.data[target_idx]) {
+                        break oneSide;
+                    }
+                    same_count++;
+                }
+
+                round++;
+            }
+
+            if (same_count === config.WIN_COUNT) {
+                return true;
+            }
         }
 
         return false;

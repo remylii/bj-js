@@ -1,14 +1,15 @@
-import { Board } from '#/Board';
+import { Board } from "#/Board";
+import { config } from "#/config/app";
 
-describe('Board', (): void => {
-    test('constructor', (): void => {
+describe("Board", (): void => {
+    test("constructor", (): void => {
         const b = new Board(10);
     });
 
     test(`put`, (): void => {
         const board = new Board(10);
-        const s1 = '●';
-        const s2 = '◆';
+        const s1 = "●";
+        const s2 = "◆";
 
         board.put(9, 9, s1);
         board.put(0, 0, s2);
@@ -21,7 +22,7 @@ describe('Board', (): void => {
 
     test(`throws out board range`, (): void => {
         const board = new Board(5);
-        const s = 'x';
+        const s = "x";
 
         expect((): void => {
             board.put(5, 0, s);
@@ -42,8 +43,8 @@ describe('Board', (): void => {
 
     test(`throws already put`, (): void => {
         const board = new Board(3);
-        const s1 = 'x';
-        const s2 = 'y';
+        const s1 = "x";
+        const s2 = "y";
 
         board.put(0, 0, s1);
         expect((): void => {
@@ -73,7 +74,6 @@ describe('Board', (): void => {
     });
 });
 
-
 describe(`isGameEnd`, (): void => {
     test(`line win`, (): void => {
         const board = new Board(10);
@@ -89,6 +89,11 @@ describe(`isGameEnd`, (): void => {
         const response2 = board.isGameEnd(4);
         expect(response1).toBe(true);
         expect(response2).toBe(true);
+
+        for (let i = 0; i < config.WIN_COUNT; i++) {
+            let res = board.isWin(i);
+            expect(res).toBe(true);
+        }
     });
 
     test(`line not enough`, (): void => {
@@ -106,6 +111,11 @@ describe(`isGameEnd`, (): void => {
         const response2 = board.isGameEnd(4);
         expect(response1).toBe(false);
         expect(response2).toBe(false);
+
+        for (let i = 0; i < config.WIN_COUNT; i++) {
+            let res = board.isWin(i);
+            expect(res).toBe(false);
+        }
     });
 
     test(`tate win`, (): void => {
@@ -123,11 +133,17 @@ describe(`isGameEnd`, (): void => {
 
         const response2 = board.isGameEnd(40);
         expect(response2).toBe(true);
+
+        for (let i = 0; i < config.WIN_COUNT; i++) {
+            let j = i * 10;
+            let res = board.isWin(j);
+            expect(res).toBe(true);
+        }
     });
 
     test(`diagonal left to right win`, (): void => {
         const board = new Board(10);
-        const s = '○';
+        const s = "○";
 
         board.put(0, 0, s);
         board.put(1, 1, s);
@@ -140,11 +156,17 @@ describe(`isGameEnd`, (): void => {
 
         const response2 = board.isGameEnd(0);
         expect(response2).toBe(true);
+
+        for (let i = 0; i < config.WIN_COUNT; i++) {
+            let j = i * 11;
+            let res = board.isWin(j);
+            expect(res).toBe(true);
+        }
     });
 
     test(`diagonal right to left win`, (): void => {
         const board = new Board(10);
-        const s = '○';
+        const s = "○";
 
         const a = board.isGameEnd(40);
         expect(a).toBe(false);
@@ -164,5 +186,11 @@ describe(`isGameEnd`, (): void => {
 
         const response2 = board.isGameEnd(4);
         expect(response2).toBe(true);
+
+        for (let i = 0; i < config.WIN_COUNT; i++) {
+            let j = 40 - i * 9;
+            let res = board.isWin(j);
+            expect(res).toBe(true);
+        }
     });
 });
