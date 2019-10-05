@@ -51,35 +51,6 @@ export class Board {
         return false;
     }
 
-    isGameEnd(idx: number): boolean {
-        const indexes: Array<number> = [
-            -(this.length + 1),
-            -this.length,
-            -(this.length - 1),
-            -1,
-            1,
-            this.length - 1,
-            this.length,
-            this.length + 1
-        ];
-
-        const s = this.data[idx];
-        if (s === null || s === undefined) return false;
-
-        iterableIndexes: for (const val of indexes) {
-            for (let i = 1; i < config.WIN_COUNT; i++) {
-                let target_idx = idx + val * i;
-                if (target_idx < 0 || s !== this.data[target_idx]) {
-                    continue iterableIndexes;
-                }
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
     isWin(idx: number): boolean {
         const indexes: Array<number> = [
             this.length + 1,
@@ -88,9 +59,10 @@ export class Board {
             1
         ];
 
-        for (const val of indexes) {
-            const s = this.data[idx];
+        const s = this.data[idx];
+        if (s === null || s === undefined) return false;
 
+        for (const val of indexes) {
             let round = 0;
             let same_count = 1;
             while (round < 2) {

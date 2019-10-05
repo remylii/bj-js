@@ -74,21 +74,21 @@ describe("Board", (): void => {
     });
 });
 
-describe(`isGameEnd`, (): void => {
+describe(`isWin`, (): void => {
     test(`line win`, (): void => {
         const board = new Board(10);
         const s = `●`;
+
+        for (let i = 0; i < config.WIN_COUNT; i++) {
+            let res = board.isWin(i);
+            expect(res).toBe(false);
+        }
 
         board.put(4, 0, s);
         board.put(3, 0, s);
         board.put(2, 0, s);
         board.put(1, 0, s);
         board.put(0, 0, s);
-
-        const response1 = board.isGameEnd(0);
-        const response2 = board.isGameEnd(4);
-        expect(response1).toBe(true);
-        expect(response2).toBe(true);
 
         for (let i = 0; i < config.WIN_COUNT; i++) {
             let res = board.isWin(i);
@@ -107,11 +107,6 @@ describe(`isGameEnd`, (): void => {
         board.put(1, 0, s);
         board.put(0, 0, s);
 
-        const response1 = board.isGameEnd(0);
-        const response2 = board.isGameEnd(4);
-        expect(response1).toBe(false);
-        expect(response2).toBe(false);
-
         for (let i = 0; i < config.WIN_COUNT; i++) {
             let res = board.isWin(i);
             expect(res).toBe(false);
@@ -122,17 +117,17 @@ describe(`isGameEnd`, (): void => {
         const board = new Board(10);
         const s = `●`;
 
+        for (let i = 0; i < config.WIN_COUNT; i++) {
+            let j = i * 10;
+            let res = board.isWin(j);
+            expect(res).toBe(false);
+        }
+
         board.put(0, 4, s);
         board.put(0, 3, s);
         board.put(0, 2, s);
         board.put(0, 1, s);
         board.put(0, 0, s);
-
-        const response1 = board.isGameEnd(0);
-        expect(response1).toBe(true);
-
-        const response2 = board.isGameEnd(40);
-        expect(response2).toBe(true);
 
         for (let i = 0; i < config.WIN_COUNT; i++) {
             let j = i * 10;
@@ -145,17 +140,17 @@ describe(`isGameEnd`, (): void => {
         const board = new Board(10);
         const s = "○";
 
+        for (let i = 0; i < config.WIN_COUNT; i++) {
+            let j = i * 11;
+            let res = board.isWin(j);
+            expect(res).toBe(false);
+        }
+
         board.put(0, 0, s);
         board.put(1, 1, s);
         board.put(2, 2, s);
         board.put(3, 3, s);
         board.put(4, 4, s);
-
-        const response1 = board.isGameEnd(44);
-        expect(response1).toBe(true);
-
-        const response2 = board.isGameEnd(0);
-        expect(response2).toBe(true);
 
         for (let i = 0; i < config.WIN_COUNT; i++) {
             let j = i * 11;
@@ -168,24 +163,17 @@ describe(`isGameEnd`, (): void => {
         const board = new Board(10);
         const s = "○";
 
-        const a = board.isGameEnd(40);
-        expect(a).toBe(false);
+        for (let i = 0; i < config.WIN_COUNT; i++) {
+            let j = 40 - i * 9;
+            let res = board.isWin(j);
+            expect(res).toBe(false);
+        }
 
         board.put(0, 4, s);
         board.put(1, 3, s);
         board.put(2, 2, s);
         board.put(3, 1, s);
-
-        const b = board.isGameEnd(4);
-        expect(b).toBe(false);
-
         board.put(4, 0, s);
-
-        const response1 = board.isGameEnd(40);
-        expect(response1).toBe(true);
-
-        const response2 = board.isGameEnd(4);
-        expect(response2).toBe(true);
 
         for (let i = 0; i < config.WIN_COUNT; i++) {
             let j = 40 - i * 9;
