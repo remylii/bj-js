@@ -22,7 +22,7 @@ if (!!element) {
             elem.innerHTML = idx.toString();
             elem.classList.add("block-first");
 
-            if (board.isGameEnd(idx) === true) {
+            if (board.isWin(idx) === true) {
                 if (!!resultElement) {
                     resultElement.innerHTML = block + ` の勝利!`;
                 }
