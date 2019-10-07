@@ -113,7 +113,7 @@ describe(`isWin`, (): void => {
         }
     });
 
-    test(`tate win`, (): void => {
+    test(`vertical win`, (): void => {
         const board = new Board(10);
         const s = `●`;
 
@@ -132,6 +132,21 @@ describe(`isWin`, (): void => {
         for (let i = 0; i < config.WIN_COUNT; i++) {
             let j = i * 10;
             let res = board.isWin(j);
+            expect(res).toBe(true);
+        }
+    });
+
+    test(`vertical`, (): void => {
+        const board = new Board(10);
+        const s = `x`;
+
+        const indexes: Array<number> = [9 ,19, 29, 39, 49];
+        for (const idx of indexes) {
+            board.setData(idx, s);
+        }
+
+        for (const idx of indexes) {
+            const res = board.isWin(idx);
             expect(res).toBe(true);
         }
     });
@@ -179,6 +194,39 @@ describe(`isWin`, (): void => {
             let j = 40 - i * 9;
             let res = board.isWin(j);
             expect(res).toBe(true);
+        }
+    });
+});
+
+describe(`Gmaeend validation`, (): void => {
+    test(`overright`, (): void => {
+        const b = new Board(10);
+        const s = `x`;
+
+        const indexes: Array<number> = [7, 18, 29, 40, 51];
+        for (const idx of indexes) {
+            b.setData(idx, s);
+        }
+
+        for (const idx of indexes) {
+            const res = b.isWin(idx);
+            expect(res).toBe(false);
+        }
+    });
+
+    test(`overline`, (): void => {
+        const b = new Board(10);
+        const s = `x`;
+
+        const indexes: Array<number> = [88, 89, 90, 91, 92];
+        for (const idx of indexes) {
+            b.setData(idx, s);
+        }
+
+        for (const idx of indexes) {
+            const res = b.isWin(idx);
+            console.log(idx);
+            expect(res).toBe(false);
         }
     });
 });

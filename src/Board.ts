@@ -62,18 +62,48 @@ export class Board {
         const s = this.data[idx];
         if (s === null || s === undefined) return false;
 
+        const idx_n: number = parseInt(idx.toString().substr(-1), 10);
+
         for (const val of indexes) {
             let round = 0;
             let same_count = 1;
             while (round < 2) {
                 let base = round === 0 ? val : -val;
+
+                if (idx_n === (this.length - 1)) {
+                    if (base === -(this.length - 1) || base === 1 || base === this.length + 1) {
+                        round++;
+                        continue;
+                    }
+                } else if (idx%this.length === 0) {
+                    if (base === -(this.length + 1) || base === -1 || base === this.length - 1) {
+                        round++;
+                        continue;
+                    }
+                }
+
                 oneSide: for (let i = 1; i < config.WIN_COUNT; i++) {
                     let target_idx = idx + base * i;
+                    let n: number = parseInt(target_idx.toString().substr(-1), 10);
 
                     if (target_idx < 0 || s !== this.data[target_idx]) {
                         break oneSide;
                     }
+
                     same_count++;
+
+                    if (n === (this.length - 1)) {
+                        if (base === -(this.length - 1) || base === 1 || base === this.length + 1) {
+
+                            break oneSide;
+                        }
+                    }
+
+                    if (target_idx%this.length === 0) {
+                        if (base === -(this.length + 1) || base === -1 || base === this.length - 1) {
+                            break oneSide;
+                        }
+                    }
                 }
 
                 round++;
