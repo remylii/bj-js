@@ -79,7 +79,7 @@ export class Board {
                 round++;
             }
 
-            if (same_count === config.WIN_COUNT) {
+            if (same_count >= config.WIN_COUNT) {
                 return true;
             }
         }
