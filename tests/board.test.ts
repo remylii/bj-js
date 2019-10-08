@@ -225,7 +225,6 @@ describe(`Gmaeend validation`, (): void => {
 
         for (const idx of indexes) {
             const res = b.isWin(idx);
-            console.log(idx);
             expect(res).toBe(false);
         }
     });

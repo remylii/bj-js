@@ -4,7 +4,6 @@ const board = new Board(10);
 const items: NodeListOf<Element> = document.querySelectorAll(".item");
 const allItems: Array<HTMLElement> = [].slice.call(items);
 const element: HTMLElement | null = document.querySelector(".container");
-const resultElement: HTMLElement | null = document.querySelector(".result");
 
 if (!!element) {
     element.addEventListener(
@@ -12,6 +11,7 @@ if (!!element) {
         (e: Event): void => {
             const elem = e.target as HTMLElement;
             const idx: number = allItems.indexOf(elem);
+            const resultElement: HTMLElement | null = document.querySelector(".result");
 
             if (board.exists(idx)) {
                 return;
