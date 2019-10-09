@@ -1,67 +1,58 @@
 import { Board } from "#/Board";
 import { User } from "#/User";
 
+import { entryPlayer, changePlayer, getCurrentUser, getCurrentTurn, gameSet, isGameEnd } from "#/actions/GameAction";
+
 const board = new Board(10);
 const items: NodeListOf<Element> = document.querySelectorAll(".item");
 const allItems: Array<HTMLElement> = [].slice.call(items);
 const element: HTMLElement | null = document.querySelector(".container");
+const turnElement: HTMLElement | null = document.querySelector('.turn')
 
-let current_user: User = new User(`●`, 'black');
-let stundby_user: User = new User(`○`, 'white');
-let gameover: boolean = false;
-
-function changeUser(): void
-{
-    let temp = current_user;
-    current_user = stundby_user;
-    stundby_user = temp;
-
-    renderTurn();
+function init(): void {
+    const firstPlayer = new User(`●`, 'black');
+    const seconedPlayer = new User(`○`, 'white');
+    entryPlayer(firstPlayer, seconedPlayer);
+    renderHTML(turnElement, getCurrentTurn());
 }
 
-function renderTurn(): void
-{
-    const elem = document.querySelector('.turn');
+function renderHTML(elem: HTMLElement | null, s: string): void {
     if (!!elem) {
-        elem.innerHTML = `${current_user.stone}のターン`;
+        elem.innerHTML = s;
     }
 }
 
-function renderGameSet(): void
-{
-    const resultElement: HTMLElement | null = document.querySelector(".result");
-    if (!!resultElement) {
-        resultElement.innerHTML = current_user.stone + ` の勝利!`;
-        gameover = true;
-    }
-    return;
-}
+init();
 
 if (!!element) {
     element.addEventListener(
         "click",
         (e: Event): void => {
-            if (gameover === true) {
+            if (isGameEnd() === true) {
                 return;
             }
 
             const elem = e.target as HTMLElement;
             const idx: number = allItems.indexOf(elem);
+            const player = getCurrentUser();
 
             if (board.exists(idx)) {
                 return;
             }
 
-            board.setData(idx, current_user.stone);
+            board.setData(idx, player.stone);
 
             elem.innerHTML = idx.toString();
-            current_user.paint(elem);
+            player.paint(elem);
 
             if (board.isWin(idx) === true) {
-                renderGameSet();
+                const resultElement: HTMLElement | null = document.querySelector(".result");
+                renderHTML(resultElement, gameSet());
+                return;
             }
 
-            changeUser();
+            changePlayer();
+            renderHTML(turnElement, getCurrentTurn());
         },
         false
     );
